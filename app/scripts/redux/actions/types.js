@@ -1,0 +1,4 @@
+const FETCH_DATA = 'FETCH_POST';
+const FETCH_CARD = 'FETCH_CARD';
+
+export { FETCH_DATA, FETCH_CARD };

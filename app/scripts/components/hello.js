@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
-import { connect } from "react-redux";
+import React from 'react';
 
-class Hello extends Component {
-
-  render(){
-    return(
-      <div className="container m-4">
-        👋 hello
-      </div>
-      )
-  }
+function Hello() {
+  return (
+    <div className="container m-4" role="img" alt="" aria-label="">
+      hello
+    </div>
+  );
 }
 
 export default Hello;

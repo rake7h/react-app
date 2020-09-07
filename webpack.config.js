@@ -1,55 +1,53 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin")
-const path = require("path");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 
-const outputDirectory = "dist";
+const outputDirectory = 'dist';
 
 module.exports = {
   entry: [
-    './app/scripts/main'
+    './app/scripts/main',
   ],
   target: 'web',
 
   output: {
     path: path.join(__dirname, outputDirectory),
-    filename: "bundle.js"
+    filename: 'bundle.js',
   },
   devServer: {
-    port: 3000,
+    port: 4200,
     open: true,
-    proxy: {
-      "/api": "http://104.197.40.207:30326/v3/"
-    }
+    hot: true,
   },
   module: {
     rules: [{
       test: /\.js$/,
       exclude: /node_modules/,
       use: {
-        loader: "babel-loader"
-      }
+        loader: 'babel-loader',
+      },
     }, {
       test: /\.html$/,
       use: {
-        loader: "html-loader"
-      }
+        loader: 'html-loader',
+      },
     }, {
       test: /\.scss$/,
       use: [
-        //https://github.com/webpack-contrib/sass-loader
-        "style-loader", // creates style nodes from JS strings
-        "css-loader", // translates CSS into CommonJS
-        "sass-loader" // compiles Sass to CSS
-      ]
+        // https://github.com/webpack-contrib/sass-loader
+        'style-loader', // creates style nodes from JS strings
+        'css-loader', // translates CSS into CommonJS
+        'sass-loader', // compiles Sass to CSS
+      ],
     }, {
       test: /\.(png|jpg|gif|ttf|eot|svg|ico)$/,
       use: {
         loader: 'file-loader',
         options: {
-          outputPath: 'assets/images/'
-        }
-      }
+          outputPath: 'assets/images/',
+        },
+      },
     }, {
       test: /\.(woff|woff2)$/,
       use: {
@@ -57,18 +55,24 @@ module.exports = {
         options: {
           limit: 10000,
           minetype: 'application/font-woff',
-          outputPath: 'assets/fonts/'
-        }
-      }
-    }],
+          outputPath: 'assets/fonts/',
+        },
+      },
+    },
+    {
+      test: /\.(js)$/,
+      exclude: /node_modules/,
+      use: ['babel-loader', 'eslint-loader'],
+    },
+    ],
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin([outputDirectory]),
     new HtmlWebPackPlugin({
-      template: "./app/html/index.html",
-      filename: "index.html",
-      favicon: ""
-    })
-  ]
+      template: './app/html/index.html',
+      filename: 'index.html',
+      favicon: '',
+    }),
+  ],
 };
